@@ -1,5 +1,7 @@
 # RAG pipeline dependencies
 # System packages (install separately, not via pip): ffmpeg, tesseract-ocr, Docker (for Qdrant)
+# GPU users: NVIDIA needs nothing extra (the default torch from PyPI is CUDA).
+#            AMD/ROCm: install requirements-rocm.txt first, see that file.
 
 # --- Ingestion: file loaders (src/ingest/loaders.py) ---
 pymupdf>=1.24            # PDF text + render scanned pages to images

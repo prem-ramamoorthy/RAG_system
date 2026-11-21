@@ -1,0 +1,17 @@
+# PyTorch for AMD GPUs (ROCm) on Linux. Only for AMD machines; NVIDIA users skip this file.
+#
+# Install this FIRST, then the shared requirements:
+#   uv pip install -r requirements-rocm.txt
+#   uv pip install -r requirements.txt
+# (sentence-transformers then sees torch is already installed and keeps the ROCm build.)
+#
+# Radeon RX 6500M / 6500 XT / 6400 (Navi 24, gfx1034) is not officially supported by ROCm.
+# Before running, tell ROCm to treat it as gfx1030:
+#   export HSA_OVERRIDE_GFX_VERSION=10.3.0
+# Your user also needs GPU access: sudo usermod -aG render,video $USER  (then log out and back in)
+#
+# Check: python -c "import torch; print(torch.cuda.is_available(), torch.cuda.get_device_name(0))"
+# (ROCm builds of PyTorch use the torch.cuda API, so code written for NVIDIA works unchanged.)
+
+--index-url https://download.pytorch.org/whl/rocm7.2
+torch
