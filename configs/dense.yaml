@@ -1,0 +1,9 @@
+name: dense
+collection: rag_chunks            # must match the collection your ingestion script filled
+qdrant_url: http://localhost:6333
+embedding_model: BAAI/bge-m3      # must be the same model used at ingestion
+embedding_device: cpu             # keeps VRAM free for Ollama
+retriever: dense
+top_k: 5
+rerank: false
+generator_model: qwen3:8b
