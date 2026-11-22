@@ -1,0 +1,11 @@
+services:
+  qdrant:
+    image: qdrant/qdrant:v1.20.2
+    container_name: rag-qdrant
+    restart: unless-stopped
+    ports:
+      # Bound to localhost only, so no API key is needed for local dev.
+      - "127.0.0.1:${QDRANT_HTTP_PORT:-6333}:6333"   # REST API + dashboard
+      - "127.0.0.1:${QDRANT_GRPC_PORT:-6334}:6334"   # gRPC (faster bulk uploads)
+    volumes:
+      - ./qdrant_storage:/qdrant/storage

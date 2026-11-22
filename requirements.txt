@@ -1,5 +1,5 @@
 # RAG pipeline dependencies
-# System packages (install separately, not via pip): ffmpeg, tesseract-ocr, Docker (for Qdrant)
+# System packages (install separately, not via pip): ffmpeg, tesseract-ocr, Docker (for Qdrant), Ollama (LLM)
 # GPU users: NVIDIA needs nothing extra (the default torch from PyPI is CUDA).
 #            AMD/ROCm: install requirements-rocm.txt first, see that file.
 
@@ -14,18 +14,19 @@ openpyxl>=3.1            # .xlsx engine for pandas
 trafilatura>=1.12        # .html main-text extraction
 beautifulsoup4>=4.12     # .html fallback
 faster-whisper>=1.0      # audio/video transcription (ffmpeg extracts audio from video)
+av<19                    # faster-whisper 1.2.1 breaks on PyAV 19 (open() lost metadata_errors)
 
 # --- Chunking (src/ingest/chunkers.py) ---
 tiktoken>=0.7            # token counting for ~512-token chunks with overlap
 
 # --- Retrieval (src/retrieval/) ---
 qdrant-client>=1.10      # vector store (Qdrant runs in Docker)
-sentence-transformers>=3.0   # BAAI/bge-m3 embeddings + BAAI/bge-reranker-v2-m3 cross-encoder
+sentence-transformers>=3.0   # BAAI/bge-reranker-v2-m3 cross-encoder (embeddings come from Ollama)
 rank-bm25>=0.2.2         # BM25 sparse retrieval
 numpy>=1.26
 
 # --- Generation (src/generate.py) ---
-openai>=1.40             # LLM calls (OPENAI_API_KEY); swap for your provider's SDK if different
+openai>=1.40             # client for Ollama's OpenAI-compatible API (localhost:11434/v1)
 
 # --- Config, tracing, utilities ---
 pyyaml>=6.0              # configs/*.yaml
@@ -33,6 +34,6 @@ python-dotenv>=1.0       # load API keys from .env
 tqdm>=4.66
 
 # --- Evaluation and tests (eval/, tests/) ---
-ragas>=0.2               # faithfulness, answer relevancy, context precision/recall
+ragas>=0.4               # faithfulness, answer relevancy, context precision/recall
 datasets>=2.20           # used by ragas
 pytest>=8.0

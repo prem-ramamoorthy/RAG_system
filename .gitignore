@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+qdrant_storage/
+data/raw/*
+data/transcripts/*
+!data/raw/.gitkeep
+!data/transcripts/.gitkeep
